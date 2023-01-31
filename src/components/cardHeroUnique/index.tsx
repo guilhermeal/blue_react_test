@@ -1,36 +1,13 @@
-import {
-  ImageListItem,
-  ImageListItemBar,
-  IconButton,
-  Typography,
-  Grid,
-} from "@mui/material";
+import { Grid } from "@mui/material";
 import { StyleCardHero, StyleDataCardHero } from "./style";
-
-interface CharacterProps {
-  id?: number;
-  name?: string;
-  description?: string;
-  modified?: Date;
-  resourceURI?: string;
-  urls?: any;
-  thumbnail?: {
-    path: string;
-    extension: string;
-  };
-  comics?: any;
-  stories?: any;
-  events?: any;
-  series?: any;
-}
+import { Characters } from "../../types/characters";
 
 interface CardHeroUniqueProps {
-  character: CharacterProps;
+  character: Characters;
 }
 
 export function CardHeroUnique({ character }: CardHeroUniqueProps) {
-
-  const thumb = `${character.thumbnail?.path}.${character.thumbnail?.extension}`;
+  const thumb = `${character.thumbnail.path}.${character.thumbnail.extension}`;
   return (
     <StyleCardHero>
       <Grid container spacing={2}>

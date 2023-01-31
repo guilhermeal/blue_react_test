@@ -8,7 +8,8 @@ import {
   InputAdornment,
   InputLabel,
   OutlinedInput,
-  Button,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Search } from "@mui/icons-material";
@@ -20,10 +21,20 @@ interface TopBarProps {
 
 export function TopBar({ handleHeroeByName }: TopBarProps) {
   const [search, setSearch] = useState("");
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const options = ["MARVEL", "", "Heroes", "Comics", "Series"];
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="transparent" >
+    <Box sx={{ flexGrow: 1, marginBottom: "1rem" }}>
+      <AppBar position="static" color="transparent">
         <Toolbar>
           <IconButton
             size="large"
@@ -31,14 +42,42 @@ export function TopBar({ handleHeroeByName }: TopBarProps) {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={handleClick}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Marvel
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              "aria-labelledby": "long-button",
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                height: "90vh",
+                width: "50ch",
+              },
+            }}
+          >
+            {options.map((option) => (
+              <MenuItem
+                key={option}
+                selected={option === "Pyxis"}
+                onClick={handleClose}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
+          <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
+            MARVEL
           </Typography>
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="filled">
-            <InputLabel htmlFor="search-heroe-field">Buscar herói...</InputLabel>
+          <FormControl sx={{ m: 1, width: "30ch" }} variant="filled">
+            <InputLabel htmlFor="search-heroe-field">
+              Find your hero...
+            </InputLabel>
             <OutlinedInput
               id="search-heroe-field"
               type="text"
@@ -46,7 +85,7 @@ export function TopBar({ handleHeroeByName }: TopBarProps) {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label="campo para busca de herói"
+                    aria-label="field to find your hero"
                     onClick={() => {
                       handleHeroeByName(search);
                     }}
@@ -59,7 +98,7 @@ export function TopBar({ handleHeroeByName }: TopBarProps) {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="Busca"
               value={search}
             />
           </FormControl>

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyleAppBar = styled.div`
+export const StyleTopBar = styled.div`
   color: yellow;
   height: 100vh;
   width: 100vw;

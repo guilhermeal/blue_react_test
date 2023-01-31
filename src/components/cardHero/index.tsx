@@ -1,52 +1,46 @@
 import { ImageListItem, ImageListItemBar, IconButton } from "@mui/material";
+import { Info as InfoIcon } from "@mui/icons-material";
 import { StyleCardHero } from "./style";
-import { InfoOutlined } from "@mui/icons-material";
-
-interface CharacterProps {
-  id?: number;
-  name?: string;
-  description?: string;
-  modified?: Date;
-  resourceURI?: string;
-  urls?: any;
-  thumbnail?: {
-    path: string;
-    extension: string;
-  };
-  comics?: any;
-  stories?: any;
-  events?: any;
-  series?: any;
-}
+import { Characters } from "../../types/characters";
 
 interface CardHeroProps {
-  character: CharacterProps;
+  character: Characters;
+  onOpenModal(data: Characters): void;
 }
 
-export function CardHero({ character }: CardHeroProps) {
-  const thumb = `${character.thumbnail?.path}.${character.thumbnail?.extension}`;
+export function CardHero({ character, onOpenModal }: CardHeroProps) {
+  const thumb = `${character.thumbnail.path}.${character.thumbnail.extension}`;
+
+  const handleClickHero = (character: Characters) => {
+    onOpenModal(character);
+  };
+
   return (
     <StyleCardHero>
-      <ImageListItem key={thumb} >
+      <ImageListItem key={character.id}>
         <img
-          src={`${thumb}?w=248&fit=crop&auto=format`}
-          srcSet={`${thumb}?w=248&fit=crop&auto=format&dpr=2 2x`}
+          src={`${thumb}?w=238&fit=crop&auto=format`}
+          srcSet={`${thumb}?w=238&fit=crop&auto=format&dpr=2 2x`}
           alt={character.name}
+          title={character.name}
           loading="lazy"
-          style={{ borderRadius: "25px", width: "100%", height: "100%", boxShadow: "1px 6px 10px #000"}}
         />
         <ImageListItemBar
           title={character.name}
           subtitle={character.description}
           actionIcon={
             <IconButton
-              sx={{ color: "rgba(255, 255, 255, 0.84)" }}
-              aria-label={`info do heroi ${character.name}`}
+              sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+              aria-label={`Herói ${character.name}`}
+              onClick={() => handleClickHero(character)}
             >
-              <InfoOutlined />
+              <InfoIcon titleAccess="Read more" />
             </IconButton>
           }
-          style={{ borderRadius: "0px 0px 25px 25px" }}
+          style={{
+            borderRadius: "0px 0px 25px 25px",
+            fontWeight: "bold",
+          }}
         />
       </ImageListItem>
     </StyleCardHero>
